@@ -1,0 +1,156 @@
+/* --- 1. Variables Globales (Raíz) --- */
+/* El uso de variables CSS es una práctica moderna 
+   para mantener la consistencia fácilmente. */
+:root {
+  --sidebar-width: 260px;
+  --bg-dark: #111827;         /* Un azul/gris oscuro para la barra lateral */
+  --bg-dark-hover: #1f2937;   /* Un poco más claro para hover */
+  --bg-light: #f9fafb;        /* Un gris muy claro para el contenido */
+  --text-light: #d1d5db;      /* Texto claro para la barra lateral */
+  --text-light-hover: #ffffff; /* Texto blanco para hover */
+  --text-dark: #111827;       /* Texto oscuro para el contenido */
+  --accent-blue: #3b82f6;     /* Un color de acento brillante */
+  --border-color: #374151;    /* Borde sutil en la barra lateral */
+  --radius-md: 8px;
+  --radius-sm: 4px;
+  --transition-speed: 0.2s;
+}
+
+/* --- 2. Layout Principal --- */
+.dashboard-layout {
+  display: grid;
+  /* Define 2 columnas: la barra lateral (ancho fijo) y el contenido (flexible) */
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  overflow: hidden; /* Evita el scroll en la página principal */
+}
+
+/* --- 3. Barra Lateral (Sidebar) --- */
+.sidebar {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  padding: 24px;
+  display: flex;
+  flex-direction: column; /* Apila los elementos verticalmente */
+  height: 100vh; /* Ocupa toda la altura */
+  overflow-y: auto; /* Permite scroll *solo* en la barra si hay muchos ítems */
+}
+
+.sidebar-header {
+  margin-bottom: 32px; /* Espacio debajo del título */
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.75rem; /* 28px */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre el emoji 📊 y el texto "Panel" */
+}
+
+/* --- 4. Menú de Navegación --- */
+.menu {
+  flex-grow: 1; /* <-- ¡TRUCO IMPORTANTE!
+     Esto "empuja" el botón de logout hacia el fondo 
+     al ocupar todo el espacio disponible. */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Espacio entre cada ítem del menú */
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Espacio entre el ícono y el texto */
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 1rem; /* 16px */
+  transition: background-color var(--transition-speed) ease, 
+              color var(--transition-speed) ease;
+}
+
+.menu-item svg {
+  font-size: 1.25rem; /* 20px */
+  stroke-width: 2;
+  /* Asegura que el ícono no se encoja */
+  flex-shrink: 0; 
+}
+
+/* Efecto Hover: se aplica al pasar el ratón */
+.menu-item:hover {
+  background-color: var(--bg-dark-hover);
+  color: var(--text-light-hover);
+}
+
+/* Efecto Focus: importante para accesibilidad (navegar con Tab) */
+.menu-item:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  background-color: var(--bg-dark-hover);
+  color: var(--text-light-hover);
+}
+
+/* --- 5. Botón de Cerrar Sesión --- */
+.logout-btn {
+  /* Reseteamos estilos de botón para que parezca un ítem de menú */
+  background: none;
+  border: none;
+  font-family: inherit; /* Usa la misma fuente que el resto */
+  cursor: pointer;
+  
+  /* Re-usamos los estilos de .menu-item para consistencia */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background-color var(--transition-speed) ease, 
+              color var(--transition-speed) ease;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  margin-top: 24px; /* Espacio para separarlo del menú */
+  border-top: 1px solid var(--border-color); /* Línea separadora sutil */
+  padding-top: 24px;
+}
+
+.logout-btn svg {
+  font-size: 1.25rem;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.logout-btn:hover {
+  background-color: var(--bg-dark-hover);
+  color: var(--text-light-hover);
+}
+
+.logout-btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  background-color: var(--bg-dark-hover);
+  color: var(--text-light-hover);
+}
+
+/* --- 6. Área de Contenido Principal --- */
+.main-content {
+  background-color: var(--bg-light);
+  padding: 32px 48px; /* Más padding para que el contenido "respire" */
+  height: 100vh;
+  overflow-y: auto; /* <-- ¡MUY IMPORTANTE!
+     Esto hace que solo el área de contenido tenga scroll, 
+     no toda la página.
+  */
+}
+
+/* Opcional: Estilos base para el contenido dentro del Outlet */
+.main-content h1, .main-content h2, .main-content h3 {
+  color: var(--text-dark);
+  margin-top: 0;
+}

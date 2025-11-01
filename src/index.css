@@ -1,0 +1,88 @@
+/* index.css */
+
+/* 🌗 Variables globales siguen igual */
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary: #10b981;
+  --bg-dark: #0f172a;
+  --bg-light: #f8fafc;
+  --text-dark: #1e293b;
+  --text-light: #e2e8f0;
+  --accent: #f59e0b;
+  --transition-speed: 0.3s;
+  font-family: "Inter", "Avenir", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color-scheme: light dark;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* 🌞 Modo claro automático */
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+  }
+}
+
+/* 🚀 Estilos solo para la página de login */
+body.login-page {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 1.5rem;
+  transition: all var(--transition-speed);
+}
+
+body.login-page h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.2;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+body.login-page button {
+  border-radius: 10px;
+  border: none;
+  padding: 0.75em 1.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.login-page button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+}
+
+/* 📱 Responsivo */
+@media (max-width: 768px) {
+  body.login-page {
+    padding: 1rem;
+  }
+
+  body.login-page h1 {
+    font-size: 2rem;
+  }
+
+  body.login-page button {
+    width: 100%;
+  }
+}
