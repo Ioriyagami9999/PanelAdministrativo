@@ -1,4 +1,4 @@
-/* === 🌌 Fondo Animado Neon para Login === */
+
 
 .login-page-container {
   display: flex;
@@ -12,7 +12,6 @@
   color: #fff;
 }
 
-/* === Capa 1: Neblina de colores brillantes === */
 .login-page-container::before {
   content: "";
   position: absolute;
@@ -35,7 +34,6 @@
   100% { transform: translate(-6%, 6%) scale(1); }
 }
 
-/* === Capa 2: Ondas brillantes giratorias === */
 .login-page-container::after {
   content: "";
   position: absolute;
@@ -56,7 +54,6 @@
   100% { transform: rotate(360deg) scale(1.05); }
 }
 
-/* === ✨ Partículas flotantes (efecto estrellas) === */
 @keyframes floatParticles {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-2000px) scale(1.5); opacity: 0; }
@@ -72,7 +69,7 @@
   pointer-events: none;
 }
 
-/* === Tarjeta de Login === */
+
 .login-card {
   position: relative;
   z-index: 2;
@@ -93,7 +90,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Campos del formulario === */
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -127,7 +124,7 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
 }
 
-/* === Botón === */
+
 .login-submit-button {
   margin-top: 1rem;
   padding: 0.9rem;
@@ -152,7 +149,7 @@
   transform: scale(1.05);
 }
 
-/* === Responsividad === */
+
 @media (max-width: 480px) {
   .login-card {
     padding: 1.5rem;
@@ -160,4 +157,3 @@
   }
 }
 
-/* === Generar partículas desde JS === */

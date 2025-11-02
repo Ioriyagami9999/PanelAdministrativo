@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { 
-  // --- ✅ CAMBIO N° 1 ---
-  // Importamos los hooks de mutación desde la NUEVA RAMA de posts
+
   useAddPostMutation, 
   useUpdatePostMutation 
-} from "../../features/posts/postsApi"; // <-- ¡Ruta actualizada!
+} from "../../features/posts/postsApi";
 import { 
-  // 'useMeQuery' sigue viniendo del TRONCO (api)
+
   useMeQuery 
 } from "../../api/dummyjsonApi";
 import { InputText } from "primereact/inputtext";
@@ -29,8 +28,7 @@ const PostForm: React.FC = () => {
   });
   const { errors, isSubmitting } = formState;
 
-  // --- ✅ CAMBIO N° 2 ---
-  // Estos hooks ahora vienen del 'postsApi' importado arriba
+
   const [addPost, { isLoading: isAdding }] = useAddPostMutation();
   const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
   
@@ -42,7 +40,7 @@ const PostForm: React.FC = () => {
   const isLoading = isAdding || isUpdating;
 
   useEffect(()=> {
-    // Lógica para cargar datos si estás editando (opcional)
+
   }, [id, isEdit, reset]);
 
   const onSubmit = async (data: FormData) => {
@@ -89,8 +87,7 @@ const PostForm: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="p-fluid p-p-4 p-shadow-2" style={{maxWidth:720, margin: '0 auto', background: 'white', borderRadius: '8px'}}>
         
         <h3 style={{marginTop: 0}}>{isEdit ? "Editar" : "Crear"} publicación</h3>
-        
-        {/* Campo Título con validación */}
+
         <div className="p-field p-mb-3">
           <label htmlFor="title" className="p-d-block p-mb-1">Título</label>
           <Controller 
@@ -108,7 +105,6 @@ const PostForm: React.FC = () => {
           {errors.title && <small className="p-error p-d-block p-mt-1">{errors.title.message}</small>}
         </div>
 
-        {/* Campo Contenido con validación */}
         <div className="p-field p-mb-3">
           <label htmlFor="body" className="p-d-block p-mb-1">Contenido</label>
           <Controller 
@@ -127,7 +123,7 @@ const PostForm: React.FC = () => {
           {errors.body && <small className="p-error p-d-block p-mt-1">{errors.body.message}</small>}
         </div>
 
-        {/* Campo Tags */}
+
         <div className="p-field p-mb-3">
           <label htmlFor="tags" className="p-d-block p-mb-1">Tags (separados por coma)</label>
           <Controller 
@@ -145,7 +141,7 @@ const PostForm: React.FC = () => {
           />
         </div>
 
-        {/* Botones de Acción */}
+      
         <div className="p-mt-4 p-d-flex p-jc-end">
           <Button 
             label="Cancelar" 

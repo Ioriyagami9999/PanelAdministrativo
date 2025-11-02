@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
         className="w-full max-w-2xl shadow-xl border-0 rounded-2xl bg-white/90 backdrop-blur-md"
       >
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-4 md:p-6">
-          {/* Imagen de perfil */}
+
           <div className="flex-shrink-0">
             <img
               src={user.image}
@@ -27,7 +27,7 @@ const ProfilePage: React.FC = () => {
             />
           </div>
 
-          {/* Información del usuario */}
+         
           <div className="flex-1 text-center md:text-left">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
               {user.firstName} {user.lastName}

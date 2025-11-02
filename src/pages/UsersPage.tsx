@@ -1,12 +1,11 @@
 import React, { useState, useRef } from "react";
 import {
-  // 1. Importamos todos los hooks de nuestra "rama" de usuarios
   useGetUsersQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
-} from "../features/users/usersApi"; // <-- ¡Nuestra API de rama!
-import { User } from "../utils/types"; // Importamos el tipo 'User'
+} from "../features/users/usersApi"; 
+import { User } from "../utils/types"; 
 import { Toast } from "primereact/toast";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Card } from "primereact/card";
@@ -15,39 +14,32 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dialog } from "primereact/dialog";
-import { ConfirmDialog } from "primereact/confirmdialog"; // Para la confirmación
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 const UsersPage: React.FC = () => {
   const toast = useRef<any>(null);
 
-  // --- 2. Estado para el Formulario y el Modal ---
-  // Usamos Partial<User> para que el formulario (currentUser) pueda estar vacío o incompleto
   const [userDialog, setUserDialog] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [currentUser, setCurrentUser] = useState<Partial<User>>({});
 
-  // --- 3. Estado para la Búsqueda y Confirmación ---
   const [globalFilter, setGlobalFilter] = useState("");
   const [confirmState, setConfirmState] = useState<{ visible: boolean; id?: number }>({ visible: false });
 
-  // --- 4. Llamadas a la API (Hooks de RTK Query) ---
   const { data: usersData, isLoading, isError, error } = useGetUsersQuery({ limit: 100 });
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-  const isLoadingForm = isCreating || isUpdating; // Estado de carga para el modal
-
-  // --- 5. Handlers para Abrir/Cerrar Modales ---
+  const isLoadingForm = isCreating || isUpdating; 
   const handleNew = () => {
-    setCurrentUser({}); // Limpiamos el formulario
+    setCurrentUser({}); 
     setIsEdit(false);
     setUserDialog(true);
   };
 
   const handleEdit = (user: User) => {
-    setCurrentUser({ ...user }); // Llenamos el formulario con el usuario
-    setIsEdit(true);
+    setCurrentUser({ ...user });
     setUserDialog(true);
   };
 
@@ -60,17 +52,13 @@ const UsersPage: React.FC = () => {
     setConfirmState({ visible: true, id: id });
   };
 
-  // --- 6. Handler para Guardar (Crear o Editar) ---
   const handleSave = async () => {
     try {
       let message = "";
       if (isEdit) {
-        // Aseguramos que 'id' esté presente para actualizar
         await updateUser({ id: currentUser.id!, ...currentUser }).unwrap();
         message = "Usuario actualizado con éxito";
       } else {
-        // Para crear, 'id' no es necesario
-        // Usamos Omit para asegurar que no enviamos 'id'
         const newUser = currentUser as Omit<User, 'id'>;
         await createUser(newUser).unwrap();
         message = "Usuario creado con éxito";
@@ -89,7 +77,6 @@ const UsersPage: React.FC = () => {
     }
   };
 
-  // --- 7. Handler para Confirmar Eliminación ---
   const confirmDelete = async () => {
     if (!confirmState.id) return;
     try {
@@ -102,17 +89,15 @@ const UsersPage: React.FC = () => {
         detail: err?.data?.message || "No se pudo eliminar el usuario",
       });
     } finally {
-      setConfirmState({ visible: false }); // Cerramos el diálogo
+      setConfirmState({ visible: false }); 
     }
   };
 
-  // --- 8. Handlers para el Formulario (actualiza el estado 'currentUser') ---
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, name: keyof User) => {
     const val = e.target.value;
     setCurrentUser(prev => ({ ...prev, [name]: val }));
   };
 
-  // --- 9. Estados de Carga y Error ---
   if (isLoading) {
     return <ProgressSpinner style={{ display: 'block', margin: 'auto' }} />;
   }
@@ -120,7 +105,6 @@ const UsersPage: React.FC = () => {
     return <div className="p-error">Error al cargar usuarios: {JSON.stringify(error)}</div>;
   }
 
-  // --- 10. Plantilla para los botones de Acciones en la tabla ---
   const actionBodyTemplate = (rowData: User) => {
     return (
       <div className="p-d-flex" style={{ gap: '0.5rem' }}>
@@ -130,7 +114,6 @@ const UsersPage: React.FC = () => {
     );
   };
 
-  // --- 11. Header de la Tabla (Búsqueda y Botón 'Nuevo') ---
   const tableHeader = (
     <div className="p-d-flex p-jc-between p-ai-center">
       <span className="p-input-icon-left">
@@ -194,7 +177,7 @@ const UsersPage: React.FC = () => {
         </DataTable>
       </Card>
 
-      {/* --- 12. Modal para Crear/Editar Usuario --- */}
+  
       <Dialog
         visible={userDialog}
         header={isEdit ? "Editar Usuario" : "Crear Usuario"}
@@ -225,7 +208,6 @@ const UsersPage: React.FC = () => {
           <label htmlFor="username" className="p-d-block p-mb-1 p-text-bold">Username</label>
           <InputText id="username" value={currentUser.username || ''} onChange={(e) => onInputChange(e, 'username')} />
         </div>
-        {/* Puedes añadir más campos (phone, etc.) aquí si lo deseas */}
       </Dialog>
     </div>
   );

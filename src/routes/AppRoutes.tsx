@@ -41,19 +41,19 @@ const PrivateLayoutWrapper = () => {
 
 const AppRoutes: React.FC = () => (
   <Routes>
-    {/* Ruta pública */}
+ 
     <Route path="/login" element={<LoginPage />} />
 
-    {/* Rutas privadas */}
+  
     <Route element={<PrivateRoute />}>
       
-      {/* 5. Usamos el PrivateLayoutWrapper como el "padre" */}
+   
       <Route element={<PrivateLayoutWrapper />}>
         
-        {/* Redirigimos la ruta raíz "/" a "/profile" */}
+   
         <Route index element={<Navigate to="/profile" replace />} />
 
-        {/* 6. Todas tus rutas van "adentro" (serán el <Outlet>) */}
+  
         <Route path="profile" element={<ProfilePage />} />
 
         <Route path="users" element={<UserPage />} />

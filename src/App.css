@@ -1,4 +1,4 @@
-/* ===== 🎨 VARIABLES DE COLOR Y FUENTE ===== */
+
 :root {
   --color-bg: #f5f7fa;
   --color-card: #ffffff;
@@ -15,7 +15,7 @@
   --slide-up: slideUp 0.6s ease forwards;
 }
 
-/* ===== GLOBAL ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -31,7 +31,7 @@ body {
   animation: var(--fade-in);
 }
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
+
 #root {
   width: 100%;
   max-width: 1200px;
@@ -43,7 +43,7 @@ body {
   gap: 2rem;
 }
 
-/* ===== NAVBAR ===== */
+
 .navbar {
   width: 100%;
   background: var(--color-card);
@@ -79,7 +79,7 @@ body {
   box-shadow: 0 0 8px rgba(79, 70, 229, 0.3);
 }
 
-/* ===== TARJETAS ===== */
+
 .card, .dashboard-card {
   background: var(--color-card);
   border-radius: var(--radius);
@@ -94,7 +94,6 @@ body {
   box-shadow: 0 10px 25px rgba(79, 70, 229, 0.12);
 }
 
-/* ===== TEXTOS ===== */
 h1, h2, h3 {
   color: var(--color-text);
   font-weight: 600;
@@ -106,7 +105,7 @@ p {
   font-size: clamp(0.9rem, 1vw, 1rem);
 }
 
-/* ===== BOTONES ===== */
+
 button {
   background-color: var(--color-primary);
   color: white;
@@ -124,7 +123,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* ===== DASHBOARD GRID ===== */
+
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -133,7 +132,7 @@ button:hover {
   animation: var(--fade-in);
 }
 
-/* ===== PERFIL ===== */
+
 .user-image {
   width: clamp(80px, 10vw, 120px);
   height: clamp(80px, 10vw, 120px);
@@ -148,7 +147,6 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* ===== ANIMACIONES ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -159,7 +157,7 @@ button:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== MODO OSCURO ===== */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #111827;

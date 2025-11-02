@@ -96,15 +96,7 @@ const PostsTable: React.FC = () => {
     } finally { setConfirmState({visible:false}); }
   };
 
-  const reactionsBodyTemplate = (rowData: Post) => {
-    if (!rowData) return 0; // Guarda para el modal
-    
-    if (typeof rowData.reactions === 'object' && rowData.reactions !== null) {
-
-      return rowData.reactions.likes; 
-    }
-    return rowData.reactions;
-  };
+ 
 
   return (
     <div>
@@ -123,9 +115,7 @@ const PostsTable: React.FC = () => {
           <div className="p-fluid">
             <p><strong>Usuario:</strong> {userBodyTemplate(selectedPost)}</p>
             <p><strong>Tags:</strong> {selectedPost.tags?.join(", ")}</p>
-            <p>
-              <strong>Reacciones:</strong> {reactionsBodyTemplate(selectedPost)}
-            </p>
+            
             <hr className="p-my-2" />
             <p style={{ lineHeight: 1.6 }}>{selectedPost.body}</p>
           </div>

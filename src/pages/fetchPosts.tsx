@@ -113,7 +113,7 @@ const FetchPost: React.FC = () => {
     }
   };
 
-  /* ✅ Spinner centrado */
+
   if (loadingUser || loadingPosts) {
     return (
       <div
@@ -144,7 +144,7 @@ const FetchPost: React.FC = () => {
         accept={confirmDelete}
       />
 
-      {/* Modal de vista */}
+   
       <Dialog
         header={selectedPost?.title}
         visible={isViewVisible}
@@ -167,7 +167,7 @@ const FetchPost: React.FC = () => {
         )}
       </Dialog>
 
-      {/* Card principal */}
+ 
       <Card
         title="Gestión de publicaciones"
         subTitle="Crea, edita o elimina tus publicaciones fácilmente"
@@ -199,7 +199,7 @@ const FetchPost: React.FC = () => {
           />
         </div>
 
-        {/* Tabla */}
+      
         <DataTable
           value={
             postsData?.posts?.filter(
@@ -275,7 +275,8 @@ const FetchPost: React.FC = () => {
         </DataTable>
       </Card>
 
-      {/* Modal de edición */}
+ 
+ 
       <Dialog
         header={editingPost ? "Editar publicación" : "Nueva publicación"}
         visible={visible}

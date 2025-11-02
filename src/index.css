@@ -1,6 +1,4 @@
-/* index.css */
 
-/* 🌗 Variables globales siguen igual */
 :root {
   --primary: #6366f1;
   --primary-hover: #4f46e5;
@@ -20,7 +18,7 @@
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* 🌞 Modo claro automático */
+
 @media (prefers-color-scheme: light) {
   :root {
     background-color: var(--bg-light);
@@ -28,7 +26,7 @@
   }
 }
 
-/* 🚀 Estilos solo para la página de login */
+
 body.login-page {
   margin: 0;
   display: flex;
@@ -72,7 +70,6 @@ body.login-page button:hover {
   box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
 }
 
-/* 📱 Responsivo */
 @media (max-width: 768px) {
   body.login-page {
     padding: 1rem;
@@ -86,15 +83,12 @@ body.login-page button:hover {
     width: 100%;
   }
 }
-/* ... (todo tu código CSS anterior) ... */
 
-/* --- ✅ AÑADIR ESTO AL FINAL --- */
-/* Estilos para centrar botones del Visor PDF */
 .pdf-button-container {
   display: flex;
-  flex-direction: row; /* Alinear horizontalmente */
-  justify-content: center; /* Centrar en el eje horizontal */
-  align-items: center; /* Centrar en el eje vertical */
-  gap: 1rem; /* Espacio entre los botones */
-  margin-top: 1rem; /* Margen superior */
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  gap: 1rem; 
+  margin-top: 1rem;
 }
