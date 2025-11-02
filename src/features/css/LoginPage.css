@@ -1,61 +1,163 @@
-/* --- 1. Estilos Globales (Para tu index.css o App.css) --- */
-/* Te recomiendo poner esto en tu archivo CSS global 
-   para que no afecte solo a esta página */
-body {
-  /* Un fondo de gradiente sutil y moderno */
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-}
+/* === 🌌 Fondo Animado Neon para Login === */
 
-/* --- 2. Estilos del Componente (LoginPage.css) --- */
-
-/* Contenedor principal que centra la tarjeta */
 .login-page-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 1rem;
+  background: radial-gradient(circle at center, #020617 0%, #000814 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #fff;
 }
 
-/* La tarjeta de PrimeReact con nuestro estilo personalizado */
+/* === Capa 1: Neblina de colores brillantes === */
+.login-page-container::before {
+  content: "";
+  position: absolute;
+  width: 220%;
+  height: 220%;
+  top: -60%;
+  left: -60%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.25), transparent 70%),
+    radial-gradient(circle at 70% 60%, rgba(168, 85, 247, 0.25), transparent 75%),
+    radial-gradient(circle at 50% 80%, rgba(34, 197, 94, 0.2), transparent 80%);
+  animation: galaxyShift 25s ease-in-out infinite alternate;
+  filter: blur(60px);
+  z-index: 0;
+}
+
+@keyframes galaxyShift {
+  0% { transform: translate(0%, 0%) scale(1); }
+  50% { transform: translate(8%, -5%) scale(1.05); }
+  100% { transform: translate(-6%, 6%) scale(1); }
+}
+
+/* === Capa 2: Ondas brillantes giratorias === */
+.login-page-container::after {
+  content: "";
+  position: absolute;
+  width: 160%;
+  height: 160%;
+  top: -30%;
+  left: -30%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 70%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.06), transparent 70%);
+  animation: glowRotate 60s linear infinite;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+@keyframes glowRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.05); }
+}
+
+/* === ✨ Partículas flotantes (efecto estrellas) === */
+@keyframes floatParticles {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-2000px) scale(1.5); opacity: 0; }
+}
+
+.login-page-container span.particle {
+  position: absolute;
+  bottom: -10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: floatParticles linear infinite;
+  pointer-events: none;
+}
+
+/* === Tarjeta de Login === */
 .login-card {
-  /* Reemplazamos 'w-full max-w-md mx-auto shadow-3' */
+  position: relative;
+  z-index: 2;
+  background: rgba(17, 25, 40, 0.8);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  padding: 2rem 2.5rem;
   width: 100%;
-  max-width: 448px; /* 28rem */
-  margin: 0 auto;
-  
-  /* Sombra más suave y moderna */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  border-radius: 16px !important; /* !important para sobreescribir PrimeReact si es necesario */
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 1.2s ease forwards;
+  color: #e2e8f0;
 }
 
-/* El formulario interno */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Campos del formulario === */
 .login-form {
-  /* Reemplazamos 'space-y-4' */
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Un poco más de espacio */
+  gap: 1.25rem;
 }
 
-/* Contenedor para cada campo (label + input + error) */
 .login-field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Espacio entre label e input */
+  gap: 0.5rem;
 }
 
-/* La etiqueta (label) */
 .login-label {
-  /* Reemplazamos 'font-medium text-gray-700' */
-  font-weight: 500;
-  color: #374151; /* text-gray-700 */
+  font-weight: 600;
+  color: #cbd5e1;
 }
 
-/* El botón de submit */
-.login-submit-button {
-  /* Reemplazamos 'w-full mt-4' */
-  width: 100%;
-  margin-top: 1rem;
+.login-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.6);
+  color: #f1f5f9;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
+
+.login-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+}
+
+/* === Botón === */
+.login-submit-button {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-position 1s ease;
+  animation: gradientShift 6s ease infinite alternate;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.login-submit-button:hover {
+  transform: scale(1.05);
+}
+
+/* === Responsividad === */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+}
+
+/* === Generar partículas desde JS === */

@@ -86,3 +86,15 @@ body.login-page button:hover {
     width: 100%;
   }
 }
+/* ... (todo tu código CSS anterior) ... */
+
+/* --- ✅ AÑADIR ESTO AL FINAL --- */
+/* Estilos para centrar botones del Visor PDF */
+.pdf-button-container {
+  display: flex;
+  flex-direction: row; /* Alinear horizontalmente */
+  justify-content: center; /* Centrar en el eje horizontal */
+  align-items: center; /* Centrar en el eje vertical */
+  gap: 1rem; /* Espacio entre los botones */
+  margin-top: 1rem; /* Margen superior */
+}

@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { FiHome, FiUsers, FiFileText, FiLogOut } from "react-icons/fi";
-// Asegúrate de tener este archivo CSS o el layout se verá mal
+import { FiHome, FiUsers, FiFileText, FiLogOut, FiArchive } from "react-icons/fi";
+
 import "./css/PanelPage.css"; 
 
-// --- El "contrato" que exige la prop ---
+
 interface PanelPageLayoutProps {
   onLogout: () => void;
 }
@@ -12,31 +12,34 @@ interface PanelPageLayoutProps {
 const PanelPage: React.FC<PanelPageLayoutProps> = ({ onLogout }) => {
   return (
     <div className="dashboard-layout">
-      {/* 🧭 Sidebar */}
+
       <aside className="sidebar">
         <div className="sidebar-header">
-          <h2>📊 Panel</h2>
+          <h2>Panel administrativo</h2>
         </div>
 
         <nav className="menu">
-          <Link to="/dashboard" className="menu-item">
-            <FiHome /> <span>Dashboard</span>
+          <Link to="/profile" className="menu-item">
+            <FiHome /> <span>Perfil</span>
           </Link>
-          <Link to="/usuarios" className="menu-item">
+          <Link to="/users" className="menu-item">
             <FiUsers /> <span>Usuarios</span>
           </Link>
-          <Link to="/publicaciones" className="menu-item">
+          <Link to="/fetch" className="menu-item">
             <FiFileText /> <span>Publicaciones</span>
+          </Link>
+          <Link to="/docs" className="menu-item">
+            <FiArchive /> <span>Documentos</span>
           </Link>
         </nav>
 
-        {/* --- Aquí se usa la prop --- */}
+       
         <button className="logout-btn" onClick={onLogout}>
           <FiLogOut /> <span>Cerrar sesión</span>
         </button>
       </aside>
 
-      {/* 📄 Contenido principal (donde se renderizan las rutas hijas) */}
+  
       <main className="main-content">
         <Outlet />
       </main>

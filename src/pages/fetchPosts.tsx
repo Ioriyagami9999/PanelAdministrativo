@@ -1,24 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
-  useMeQuery,
   useGetPostsQuery,
   useAddPostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
-} from "../api/dummyjsonApi";
+} from "../features/posts/postsApi";
+import { useMeQuery } from "../api/dummyjsonApi";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { Post } from "../utils/types";
 
-const DashboardPage: React.FC = () => {
-  const toast = React.useRef<any>(null);
+const FetchPost: React.FC = () => {
+  const toast = useRef<any>(null);
   const { data: user, isLoading: loadingUser } = useMeQuery();
-  const { data: postsData, isLoading: loadingPosts } = useGetPostsQuery({ limit: 10, skip: 0 });
+  const { data: postsData, isLoading: loadingPosts } = useGetPostsQuery({
+    limit: 10,
+    skip: 0,
+  });
 
   const [addPost] = useAddPostMutation();
   const [updatePost] = useUpdatePostMutation();
@@ -30,6 +36,11 @@ const DashboardPage: React.FC = () => {
   const [body, setBody] = useState("");
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
+  const [isViewVisible, setIsViewVisible] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [confirmState, setConfirmState] = useState<{ visible: boolean; id?: number }>({
+    visible: false,
+  });
 
   const handleNew = () => {
     setEditingPost(null);
@@ -45,9 +56,19 @@ const DashboardPage: React.FC = () => {
     setVisible(true);
   };
 
-  const handleDelete = async (postId: number) => {
+  const handleView = (post: Post) => {
+    setSelectedPost(post);
+    setIsViewVisible(true);
+  };
+
+  const handleDelete = (postId: number) => {
+    setConfirmState({ visible: true, id: postId });
+  };
+
+  const confirmDelete = async () => {
+    if (!confirmState.id) return;
     try {
-      await deletePost(postId).unwrap();
+      await deletePost(confirmState.id).unwrap();
       toast.current?.show({
         severity: "success",
         summary: "Eliminado",
@@ -59,207 +80,265 @@ const DashboardPage: React.FC = () => {
         summary: "Error",
         detail: "No se pudo eliminar la publicación",
       });
+    } finally {
+      setConfirmState({ visible: false });
     }
   };
 
-const handleSave = async () => {
-  try {
-    if (editingPost) {
-      await updatePost({ id: editingPost.id, title, body }).unwrap();
+  const handleSave = async () => {
+    try {
+      if (editingPost) {
+        await updatePost({ id: editingPost.id, title, body }).unwrap();
+        toast.current?.show({
+          severity: "success",
+          summary: "Actualizado",
+          detail: "Publicación actualizada correctamente",
+        });
+      } else {
+        await addPost({ title, body, userId: user?.id }).unwrap();
+        toast.current?.show({
+          severity: "success",
+          summary: "Agregado",
+          detail: "Publicación creada correctamente",
+        });
+      }
+      setVisible(false);
+    } catch (err) {
+      console.error("❌ Error al guardar:", err);
       toast.current?.show({
-        severity: "success",
-        summary: "Actualizado",
-        detail: "Publicación actualizada correctamente",
-      });
-    } else {
-      // ✅ Aquí agregamos el userId
-      await addPost({ title, body, userId: user?.id }).unwrap();
-      toast.current?.show({
-        severity: "success",
-        summary: "Agregado",
-        detail: "Publicación creada correctamente",
+        severity: "error",
+        summary: "Error",
+        detail: "No se pudo guardar la publicación",
       });
     }
-    setVisible(false);
-  } catch (err) {
-    console.error("❌ Error al guardar:", err);
-    toast.current?.show({
-      severity: "error",
-      summary: "Error",
-      detail: "No se pudo guardar la publicación",
-    });
-  }
-};
+  };
 
-  if (loadingUser || loadingPosts) return <ProgressSpinner />;
+  /* ✅ Spinner centrado */
+  if (loadingUser || loadingPosts) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(to bottom right, #f8fafc, #eef2ff)",
+        }}
+      >
+        <ProgressSpinner
+          style={{ width: "60px", height: "60px" }}
+          strokeWidth="6"
+          animationDuration=".7s"
+        />
+      </div>
+    );
+  }
 
   return (
-<div className="p-8 bg-gray-50 min-h-screen space-y-8">
-  <Toast ref={toast} />
-
-  {/* 🧍 Sección de perfil */}
-  <Card className="shadow-md border-0">
-    <div className="flex flex-col md:flex-row items-center gap-6">
-      <img
-        src={user?.image}
-        alt="User"
-        className="w-28 h-28 rounded-full border-4 border-indigo-100 shadow"
+    <div className="p-2 md:p-4 surface-ground min-h-screen">
+      <Toast ref={toast} />
+      <ConfirmDialog
+        visible={confirmState.visible}
+        onHide={() => setConfirmState({ visible: false })}
+        message="¿Eliminar publicación?"
+        accept={confirmDelete}
       />
-      <div className="text-center md:text-left">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Bienvenido, {user?.firstName} {user?.lastName} 👋
-        </h2>
-        <p className="text-gray-500 mt-1">@{user?.username}</p>
-        <div className="mt-3 space-y-1 text-gray-600">
-          <p><b>Correo:</b> {user?.email}</p>
-          <p><b>Género:</b> {user?.gender}</p>
-        </div>
-      </div>
-    </div>
-  </Card>
 
-  {/* 🧾 Gestión de publicaciones */}
-  <Card
-    title="Gestión de publicaciones"
-    subTitle="Crea, edita o elimina tus publicaciones fácilmente"
-    className="shadow-md border-0"
-  >
-<div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-  <h3 className="text-xl font-semibold text-gray-700">Publicaciones recientes</h3>
-
-  <div className="flex items-center gap-2 w-full md:w-auto">
-    <span className="p-input-icon-left w-full md:w-64">
-      <i className="pi pi-search" />
-      <InputText
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        placeholder="Buscar publicación..."
-        className="w-full"
-      />
-    </span>
-
-    <Button
-      icon="pi pi-plus"
-      label="Nueva publicación"
-      className="p-button-rounded p-button-success"
-      onClick={handleNew}
-    />
-  </div>
-</div>
-
-
-
-<DataTable
-  value={postsData?.posts?.filter(
-    (p) =>
-      p.title.toLowerCase().includes(globalFilter.toLowerCase()) ||
-      p.body.toLowerCase().includes(globalFilter.toLowerCase())
-  ) || []}
-  paginator
-  rows={5}
-  stripedRows
-  className="rounded-lg overflow-hidden"
-  emptyMessage="No hay publicaciones registradas."
-    >
-      <Column field="id" header="ID" style={{ width: "80px" }} />
-      <Column
-        field="title"
-        header="Título"
-        body={(rowData) => (
-          <span className="font-medium text-gray-800">{rowData.title}</span>
-        )}
-      />
-      <Column
-        field="body"
-        header="Contenido"
-        body={(rowData) => (
-          <span className="text-gray-600">{rowData.body.slice(0, 80)}...</span>
-        )}
-      />
-      <Column
-        header="Acciones"
-        style={{ width: "130px" }}
-        body={(rowData) => (
-          <div className="flex gap-2 justify-center">
-            <Button
-              icon="pi pi-pencil"
-              rounded
-              outlined
-              severity="info"
-              className="p-button-sm"
-              tooltip="Editar"
-              onClick={() => handleEdit(rowData)}
-            />
-            <Button
-              icon="pi pi-trash"
-              rounded
-              outlined
-              severity="danger"
-              className="p-button-sm"
-              tooltip="Eliminar"
-              onClick={() => handleDelete(rowData.id)}
-            />
+      {/* Modal de vista */}
+      <Dialog
+        header={selectedPost?.title}
+        visible={isViewVisible}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        style={{ width: "50vw" }}
+        onHide={() => setIsViewVisible(false)}
+        modal
+      >
+        {selectedPost && (
+          <div className="p-fluid">
+            <p>
+              <strong>Usuario ID:</strong> {selectedPost.userId}
+            </p>
+            <p>
+              <strong>Tags:</strong> {selectedPost.tags?.join(", ")}
+            </p>
+            <hr className="p-my-2" />
+            <p style={{ lineHeight: 1.6 }}>{selectedPost.body}</p>
           </div>
         )}
-      />
-    </DataTable>
-  </Card>
+      </Dialog>
 
-  {/* ✏️ Modal agregar/editar */}
-  <Dialog
-    header={editingPost ? "Editar publicación" : "Nueva publicación"}
-    visible={visible}
-    style={{ width: "35vw" }}
-    onHide={() => setVisible(false)}
-    className="rounded-xl shadow-lg"
-  >
-    <div className="p-fluid space-y-4">
-      <div>
-        <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
-          Título
-        </label>
-        <InputText
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Escribe un título atractivo"
-          className="w-full"
-        />
-      </div>
+      {/* Card principal */}
+      <Card
+        title="Gestión de publicaciones"
+        subTitle="Crea, edita o elimina tus publicaciones fácilmente"
+        className="shadow-2 border-round-lg"
+      >
+        <h3 className="p-text-xl p-text-bold text-color-secondary p-mt-0 p-mb-3">
+          Publicaciones recientes
+        </h3>
 
-      <div>
-        <label htmlFor="body" className="block mb-2 font-medium text-gray-700">
-          Contenido
-        </label>
-        <InputText
-          id="body"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          placeholder="Escribe el contenido de tu publicación"
-          className="w-full"
-        />
-      </div>
+        <div
+          className="p-d-flex p-jc-between p-ai-center p-mb-4 p-flex-wrap"
+          style={{ gap: "1rem" }}
+        >
+          <span className="p-input-icon-left p-w-full p-md-w-20rem">
+            <i className="pi pi-search" />
+            <InputText
+              value={globalFilter}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              placeholder="Buscar publicación..."
+              className="p-w-full"
+            />
+          </span>
 
-      <div className="flex justify-end gap-2 pt-4">
-        <Button
-          label="Cancelar"
-          icon="pi pi-times"
-          outlined
-          severity="secondary"
-          onClick={() => setVisible(false)}
-        />
-        <Button
-          label="Guardar"
-          icon="pi pi-check"
-          severity="success"
-          onClick={handleSave}
-        />
-      </div>
+          <Button
+            icon="pi pi-plus"
+            label="Nueva"
+            className="p-button-success"
+            onClick={handleNew}
+          />
+        </div>
+
+        {/* Tabla */}
+        <DataTable
+          value={
+            postsData?.posts?.filter(
+              (p) =>
+                p.title.toLowerCase().includes(globalFilter.toLowerCase()) ||
+                p.body.toLowerCase().includes(globalFilter.toLowerCase())
+            ) || []
+          }
+          paginator
+          rows={5}
+          stripedRows
+          rowHover
+          className="border-round-lg overflow-hidden p-datatable-gridlines"
+          emptyMessage="No hay publicaciones registradas."
+          scrollable
+          responsiveLayout="scroll"
+          removableSort
+        >
+          <Column field="id" header="ID" style={{ minWidth: "80px" }} sortable />
+          <Column
+            field="title"
+            header="Título"
+            style={{ minWidth: "200px" }}
+            sortable
+            body={(rowData) => (
+              <span className="p-text-bold text-color">{rowData.title}</span>
+            )}
+          />
+          <Column
+            field="body"
+            header="Contenido"
+            style={{ minWidth: "300px" }}
+            body={(rowData) => (
+              <span className="text-color-secondary">
+                {rowData.body.slice(0, 80)}...
+              </span>
+            )}
+          />
+          <Column
+            header="Acciones"
+            frozen
+            alignFrozen="right"
+            style={{ minWidth: "130px" }}
+            body={(rowData: Post) => (
+              <div className="p-d-flex p-jc-center" style={{ gap: "0.5rem" }}>
+                <Button
+                  icon="pi pi-eye"
+                  rounded
+                  text
+                  severity="info"
+                  tooltip="Ver"
+                  onClick={() => handleView(rowData)}
+                />
+                <Button
+                  icon="pi pi-pencil"
+                  rounded
+                  text
+                  severity="warning"
+                  tooltip="Editar"
+                  onClick={() => handleEdit(rowData)}
+                />
+                <Button
+                  icon="pi pi-trash"
+                  rounded
+                  text
+                  severity="danger"
+                  tooltip="Eliminar"
+                  onClick={() => handleDelete(rowData.id)}
+                />
+              </div>
+            )}
+          />
+        </DataTable>
+      </Card>
+
+      {/* Modal de edición */}
+      <Dialog
+        header={editingPost ? "Editar publicación" : "Nueva publicación"}
+        visible={visible}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        style={{ width: "50vw" }}
+        onHide={() => setVisible(false)}
+        className="border-round-xl shadow-2"
+      >
+        <div className="p-fluid">
+          <div className="p-mb-3">
+            <label
+              htmlFor="title"
+              className="p-d-block p-mb-1 p-text-bold text-color-secondary"
+            >
+              Título
+            </label>
+            <InputText
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Escribe un título atractivo"
+              className="p-w-full"
+            />
+          </div>
+
+          <div className="p-mb-3">
+            <label
+              htmlFor="body"
+              className="p-d-block p-mb-1 p-text-bold text-color-secondary"
+            >
+              Contenido
+            </label>
+            <InputTextarea
+              id="body"
+              value={body}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setBody(e.target.value)
+              }
+              placeholder="Escribe el contenido de tu publicación"
+              className="p-w-full"
+              rows={5}
+            />
+          </div>
+
+          <div className="p-d-flex p-jc-end p-pt-4" style={{ gap: "0.5rem" }}>
+            <Button
+              label="Cancelar"
+              icon="pi pi-times"
+              outlined
+              severity="secondary"
+              onClick={() => setVisible(false)}
+            />
+            <Button
+              label="Guardar"
+              icon="pi pi-check"
+              severity="success"
+              onClick={handleSave}
+            />
+          </div>
+        </div>
+      </Dialog>
     </div>
-  </Dialog>
-</div>
-
   );
 };
 
-export default DashboardPage;
+export default FetchPost;
