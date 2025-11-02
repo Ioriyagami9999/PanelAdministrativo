@@ -1,8 +1,36 @@
+
+import '@testing-library/jest-dom'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest'
 import { renderWithProviders } from '../../test/test-utils'
 import LoginPage from './LoginPage'
+import { http, HttpResponse } from 'msw'
+import { setupServer } from 'msw/node'
+
+const mockLoginResponse = {
+  id: 1,
+  username: 'kminchelle',
+  email: 'kminchelle@example.com',
+  firstName: 'Test',
+  lastName: 'User',
+  token: 'fake-jwt-token-123',
+  image: '',
+  gender: 'male',
+}
+
+export const handlers = [
+  http.post('https://dummyjson.com/auth/login', () => {
+    return HttpResponse.json(mockLoginResponse)
+  })
+]
+
+const server = setupServer(...handlers)
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
 
 describe('Prueba de LoginPage', () => {
 
@@ -11,24 +39,18 @@ describe('Prueba de LoginPage', () => {
     
     renderWithProviders(<LoginPage />)
 
-    // --- ✅ AQUÍ ESTÁ EL CAMBIO ---
-    // 4. Act: El usuario escribe en los campos
     const usernameInput = screen.getByPlaceholderText('Nombre de usuario')
     const passwordInput = screen.getByPlaceholderText('Tu contraseña')
     const submitButton = screen.getByRole('button', { name: /Ingresar/i })
 
-    // Limpiamos los valores por defecto primero (buena práctica)
     await user.clear(usernameInput)
     await user.clear(passwordInput)
 
-    // Escribimos las credenciales correctas
     await user.type(usernameInput, 'kminchelle')
     await user.type(passwordInput, '0lelplR')
     
     await user.click(submitButton)
-    // ----------------------------
 
-    // 5. Assert: Verificamos el resultado
     const successMessage = await screen.findByText('Inicio exitoso')
     const welcomeMessage = await screen.findByText('Bienvenido, kminchelle!')
 
@@ -36,5 +58,4 @@ describe('Prueba de LoginPage', () => {
     expect(welcomeMessage).toBeInTheDocument()
   })
   
-  // ... (el otro test)
 })
