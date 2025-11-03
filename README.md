@@ -1,38 +1,38 @@
 # Panel Administrativo (Frontend)
 
-Este proyecto es una aplicación web de panel de administración construida con un stack moderno de React y TypeScript. Utiliza **Vite** como herramienta de construcción y servidor de desarrollo.
+Este proyecto es el frontend de un panel de administración, construido con un stack moderno de React y TypeScript. Utiliza **Vite** para la compilación y el servidor de desarrollo.
 
 ## Tecnologías Clave
 
-El proyecto está desarrollado con las siguientes librerías principales:
+El proyecto se apoya en estas librerías principales:
 
-* **React & TypeScript**: Núcleo del frontend para construir la interfaz de usuario.
+* **React y TypeScript**: La base de la interfaz de usuario.
 * **Vite**: Herramienta de compilación y servidor de desarrollo rápido.
-* **Redux Toolkit & RTK Query**: Gestión de estado y capa de fetching de datos. RTK Query maneja el cacheo, las mutaciones (CRUD) y la invalidación de datos, utilizando code-splitting para organizar los endpoints.
-* **PrimeReact & PrimeFlex**: Biblioteca de componentes UI y utilidades de estilo, utilizada para el diseño del dashboard y los formularios.
-* **React Hook Form**: Manejo eficiente de formularios con validación.
-* **@react-pdf-viewer**: Para la visualización de documentos PDF en la sección de Documentos.
+* **Redux Toolkit y RTK Query**: Para la gestión de estado y la capa de fetching de datos. Maneja el cacheo, las mutaciones (CRUD) y la invalidación de datos.
+* **PrimeReact y PrimeFlex**: Biblioteca de componentes UI y utilidades de estilo para el layout.
+* **React Hook Form**: Para un manejo eficiente de formularios y validaciones.
+* **@react-pdf-viewer**: Visor de documentos PDF integrado en la aplicación.
 
 ## Instalación y Ejecución
 
-Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
+Sigue estos pasos para tener el proyecto corriendo en tu entorno local.
 
 ### Prerrequisitos
 
-Asegúrate de tener instaladas las siguientes versiones (o superiores):
+Asegúrate de tener instaladas estas versiones (o superiores):
 
 * **Node.js:** `20.x`
 * **npm:** `10.x`
 
 ### 1. Instalación
 
-Primero, clona el repositorio y luego instala las dependencias necesarias.
+Clona el repositorio e instala las dependencias del proyecto.
 
 ```bash
 # Clona el repositorio
 git clone [https://github.com/Ioriyagami9999/PanelAdministrativo.git](https://github.com/Ioriyagami9999/PanelAdministrativo.git)
 
-# Navega al directorio del proyecto
+# Navega a la carpeta del proyecto
 cd PanelAdministrativo
 
 # Instala las dependencias
