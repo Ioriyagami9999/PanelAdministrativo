@@ -1,39 +1,138 @@
 # Panel Administrativo (Frontend)
 
+
+
 Este proyecto es el frontend de un panel de administración, construido con un stack moderno de React y TypeScript. Utiliza **Vite** para la compilación y el servidor de desarrollo.
+
+
 
 ## Tecnologías Clave
 
+
+
 El proyecto se apoya en estas librerías principales:
 
+
+
 * **React y TypeScript**: La base de la interfaz de usuario.
+
 * **Vite**: Herramienta de compilación y servidor de desarrollo rápido.
+
 * **Redux Toolkit y RTK Query**: Para la gestión de estado y la capa de fetching de datos. Maneja el cacheo, las mutaciones (CRUD) y la invalidación de datos.
+
 * **PrimeReact y PrimeFlex**: Biblioteca de componentes UI y utilidades de estilo para el layout.
+
 * **React Hook Form**: Para un manejo eficiente de formularios y validaciones.
+
 * **@react-pdf-viewer**: Visor de documentos PDF integrado en la aplicación.
+
+
 
 ## Instalación y Ejecución
 
+
+
 Sigue estos pasos para tener el proyecto corriendo en tu entorno local.
+
+
 
 ### Prerrequisitos
 
+
+
 Asegúrate de tener instaladas estas versiones (o superiores):
 
+
+
 * **Node.js:** `20.x`
+
 * **npm:** `10.x`
+
+
 
 ### 1. Instalación
 
+
+
 Clona el repositorio e instala las dependencias del proyecto.
 
+
+
 ```bash
+
 # Clona el repositorio
+
 git clone [https://github.com/Ioriyagami9999/PanelAdministrativo.git](https://github.com/Ioriyagami9999/PanelAdministrativo.git)
 
+
+
 # Navega a la carpeta del proyecto
+
 cd PanelAdministrativo
 
+
+
 # Instala las dependencias
+
 npm install
+
+
+
+###2. Ejecutar en Modo Desarrollo
+
+Una vez instalados los paquetes, puedes iniciar el servidor de desarrollo de Vite.
+
+
+
+```bash
+
+#Ejecuta el modo desarrollador
+
+npm run dev
+
+
+
+###3. Ejecutar en Modo Prueba
+
+
+
+
+
+```bash
+
+#Ejecuta el modo prueba
+
+npm run test
+
+
+
+###4. Build para Producción
+
+
+
+```bash
+
+#Ejecuta el modo Build para producción
+
+npm run build
+
+
+
+
+
+###Credenciales de Acceso
+
+
+
+La aplicación utiliza la API de dummyjson.com para la autenticación. Usa estas credenciales para iniciar sesión:
+
+
+
+```bash
+
+Usuario: emilys
+
+Contraseña: emilyspass
+
+
+
