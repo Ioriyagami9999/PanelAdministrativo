@@ -78,7 +78,7 @@ npm install
 
 ```
 
-###2. Ejecutar en Modo Desarrollo
+### 2. Ejecutar en Modo Desarrollo
 
 Una vez instalados los paquetes, puedes iniciar el servidor de desarrollo de Vite.
 
@@ -90,25 +90,24 @@ Una vez instalados los paquetes, puedes iniciar el servidor de desarrollo de Vit
 
 npm run dev
 
+```
 
+### 3. Ejecutar en Modo Prueba
+Despues podremos ejecutar las pruebas.
 
-# Ejecutar en Modo Prueba
-
+```bash
 #Ejecuta el modo prueba
 
 npm run test
 
 
-´´´
-
-```bash
+```
 
 
 
 
-###4. Build para Producción
 
-
+### 4.Build para Producción
 
 ```bash
 
@@ -116,11 +115,11 @@ npm run test
 
 npm run build
 
+```
 
 
 
-
-###Credenciales de Acceso
+### Credenciales de Acceso
 
 
 
@@ -134,5 +133,5 @@ Usuario: emilys
 
 Contraseña: emilyspass
 
-
+```
 
