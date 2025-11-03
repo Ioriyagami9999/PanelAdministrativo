@@ -15,10 +15,10 @@ const ProfilePage: React.FC = () => {
       <Card
         title="Mi Perfil"
         subTitle="Tu información personal y de la cuenta"
-        className="w-full max-w-2xl shadow-xl border-0 rounded-2xl bg-white/90 backdrop-blur-md"
+        className="w-full max-w-md sm:max-w-lg md:max-w-2xl shadow-xl border-0 rounded-2xl bg-white/90 backdrop-blur-md"
       >
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 p-4 md:p-6">
-          
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-4 md:p-8">
+          {/* Imagen del usuario */}
           <div className="flex-shrink-0">
             <img
               src={user.image}
@@ -27,20 +27,21 @@ const ProfilePage: React.FC = () => {
             />
           </div>
 
-          <div className="flex-1 text-center md:text-left min-w-0">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words whitespace-normal">
+          {/* Información del usuario */}
+          <div className="flex-1 text-center md:text-left w-full">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words">
               {user.firstName} {user.lastName}
             </h2>
             <p className="text-indigo-500 font-medium mt-1 break-all">
               @{user.username}
             </p>
 
-            <div className="mt-4 space-y-2 text-gray-600 text-sm md:text-base">
+            <div className="mt-4 space-y-2 text-gray-600 text-sm sm:text-base">
               <p className="break-words">
                 <span className="font-semibold text-gray-800">Correo:</span>{" "}
                 {user.email}
               </p>
-              <p>
+              <p className="capitalize">
                 <span className="font-semibold text-gray-800">Género:</span>{" "}
                 {user.gender}
               </p>
