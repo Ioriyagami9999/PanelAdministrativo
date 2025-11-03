@@ -28,7 +28,7 @@ const ProfilePage: React.FC = () => {
           </div>
 
           <div className="flex-1 text-center md:text-left min-w-0">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words whitespace-normal">
               {user.firstName} {user.lastName}
             </h2>
             <p className="text-indigo-500 font-medium mt-1 break-all">
