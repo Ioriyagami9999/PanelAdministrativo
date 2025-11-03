@@ -76,7 +76,7 @@ cd PanelAdministrativo
 
 npm install
 
-
+```
 
 ###2. Ejecutar en Modo Desarrollo
 
@@ -92,17 +92,17 @@ npm run dev
 
 
 
-###3. Ejecutar en Modo Prueba
-
-
-
-
-
-```bash
+# Ejecutar en Modo Prueba
 
 #Ejecuta el modo prueba
 
 npm run test
+
+
+´´´
+
+```bash
+
 
 
 
