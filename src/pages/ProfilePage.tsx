@@ -4,7 +4,7 @@ import React from "react";
 import { useAppSelector } from "../hooks";
 import { Navigate } from "react-router-dom";
 import { Card } from "primereact/card";
-import "./ProfilePage.css";
+import "./css/ProfilePage.css";
 
 const ProfilePage: React.FC = () => {
 const { user } = useAppSelector((state) => state.auth);
