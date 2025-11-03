@@ -17,11 +17,9 @@ const ProfilePage: React.FC = () => {
         subTitle="Tu información personal y de la cuenta"
         className="w-full max-w-2xl shadow-xl border-0 rounded-2xl bg-white/90 backdrop-blur-md"
       >
-       
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 p-4 md:p-6">
           
           <div className="flex-shrink-0">
-         
             <img
               src={user.image}
               alt="User"
@@ -29,16 +27,16 @@ const ProfilePage: React.FC = () => {
             />
           </div>
 
-          <div className="flex-1 text-center md:text-left">
-       
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+          <div className="flex-1 text-center md:text-left min-w-0">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words">
               {user.firstName} {user.lastName}
             </h2>
-            <p className="text-indigo-500 font-medium mt-1">@{user.username}</p>
+            <p className="text-indigo-500 font-medium mt-1 break-all">
+              @{user.username}
+            </p>
 
-          
             <div className="mt-4 space-y-2 text-gray-600 text-sm md:text-base">
-              <p>
+              <p className="break-words">
                 <span className="font-semibold text-gray-800">Correo:</span>{" "}
                 {user.email}
               </p>
