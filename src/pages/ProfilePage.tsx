@@ -2,7 +2,7 @@ import React from "react";
 import { useAppSelector } from "../hooks";
 import { Navigate } from "react-router-dom";
 import { Card } from "primereact/card";
-
+import "./css/ProfilePage.css"; 
 const ProfilePage: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
@@ -11,39 +11,29 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-blue-100 p-4">
+    <div className="profile-container">
       <Card
         title="Mi Perfil"
         subTitle="Tu información personal y de la cuenta"
-        className="w-full max-w-md sm:max-w-lg md:max-w-2xl shadow-xl border-0 rounded-2xl bg-white/90 backdrop-blur-md"
+        className="profile-card"
       >
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-4 md:p-8">
-          {/* Imagen del usuario */}
-          <div className="flex-shrink-0">
-            <img
-              src={user.image}
-              alt="User"
-              className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-indigo-200 shadow-md object-cover"
-            />
+        <div className="profile-content">
+          <div className="profile-image">
+            <img src={user.image} alt="User" />
           </div>
 
-          {/* Información del usuario */}
-          <div className="flex-1 text-center md:text-left w-full">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 break-words">
+          <div className="profile-info">
+            <h2>
               {user.firstName} {user.lastName}
             </h2>
-            <p className="text-indigo-500 font-medium mt-1 break-all">
-              @{user.username}
-            </p>
+            <p className="username">@{user.username}</p>
 
-            <div className="mt-4 space-y-2 text-gray-600 text-sm sm:text-base">
-              <p className="break-words">
-                <span className="font-semibold text-gray-800">Correo:</span>{" "}
-                {user.email}
+            <div className="details">
+              <p>
+                <span>Correo:</span> {user.email}
               </p>
-              <p className="capitalize">
-                <span className="font-semibold text-gray-800">Género:</span>{" "}
-                {user.gender}
+              <p>
+                <span>Género:</span> {user.gender}
               </p>
             </div>
           </div>
